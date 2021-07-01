@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 
+#SQLALchemy database configuration details with MySQL
 app = Flask(__name__)
 app.secret_key = "Secret Key"
 
@@ -9,6 +10,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+#Create model table for the database 'CRUD'
 class Data(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
@@ -20,16 +22,15 @@ class Data(db.Model):
         self.email = email
         self.phone = phone
 
-
+# Query all employee data
 @app.route('/')
 def Index():
     all_data = Data.query.all()
-
     return render_template("index.html", employees= all_data)
 
+# Insert employee details into database
 @app.route('/insert', methods=['POST'])
 def insert():
-
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
@@ -43,8 +44,8 @@ def insert():
 
         return redirect(url_for('Index'))
 
+# Update the employee details into database using id
 @app.route('/update',methods=['GET','POST'])
-
 def update():
     if request.method == 'POST':
         my_data = Data.query.get(request.form.get('id'))
@@ -57,6 +58,7 @@ def update():
 
         return redirect(url_for('Index'))
 
+# Delete the employee details from the database using id
 @app.route('/delete/<id>/',methods=['GET','POST'])
 def delete(id):
     my_data = Data.query.get(id)
@@ -66,6 +68,6 @@ def delete(id):
 
     return redirect(url_for('Index'))
 
-
+#Run the application
 if __name__ == "__main__":
     app.run(debug=True)
