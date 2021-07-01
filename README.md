@@ -12,7 +12,19 @@ Pre-requisites<br/>
 Python 3.6 (including all libraries)<br/>
 Wampserver<br/>
 
-IDE used- Pycharm
+IDE used- Pycharm<br/>
+
+Project Structure<br/>
+
+static<br/>
+ --css<br/>
+ --js<br/>
+ --templates<br/>
+   --header.html<br/>
+   --base.html<br/>
+   --index.html<br/>
+ --App.py
+
 
 
 
